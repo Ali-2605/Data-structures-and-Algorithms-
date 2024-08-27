@@ -451,32 +451,186 @@ public:
         {
             int h = max();
             int l = min();
-            printf("h = %d l = %d\n", h , l);
             
-            int arr2[h];
+            int arr2[h + 1] = {0};
             arr2[0] = l;
             for(int i = 0; i < length; i++)
             {
                 int x = A[i];
                 arr2[A[i]] = 1;
             }
-            for(int j  = l; j <= h; j++)
+
+            for(int j = l; j <= h; j++)
             {
                 if(arr2[j] == 0)
                 {
                     printf("Missing number is %d\n", j);
                 }
-                else
-                    printf("%d\n", arr2[j]);
             }
         }
     }
+
+    void dublicate()
+    {
+        int n = 0;
+        int dub = 0;
+        if(isSorted())
+        {
+            for(int i = 0; i < length; i++)
+            {
+                if(A[i] == A[i + 1])
+                {
+                    n++;
+                    dub = A[i];
+                }
+                else if(n)
+                {
+                    printf("The dublicate number is %d and it is dublicated %d times\n", dub, n + 1);
+                    dub = 0;
+                    n = 0;
+                }
+            }
+        }
+        else
+        {
+            int count;
+            int i;
+            int j;
+            for(i = 0; i < length; i++)
+            {
+                if(A[i] != -1)
+                {
+                    count = 1;
+                    for (j = i + 1; j < length; j++)
+                    {
+                        if (A[i] == A[j])
+                        {
+                            count++;
+                            A[j] = -1;
+                        }
+                    }
+                    if (count > 1)
+                    {
+                        printf("The dublicate number is %d and it is dublicated %d times\n", A[i], count);
+                    }
+                }
+            }
+        }
+    }
+
+    void dublicateH()
+    {
+        int h = max();
+        int l = min();
+        int arr2[h + 1] = {0};
+
+        for (int i = 0; i < length; i++)
+        {
+            arr2[A[i]]++;
+        }
+
+        for (int j = l; j <= h; j++)
+        {
+            if (arr2[j] > 1)
+            {
+                printf("Dublicate number = %d\n", j);
+                printf("It is dublicated %d times\n", arr2[j]);
+            }
+        }
+    }
+
+    void findSumOf(int x)
+    {
+        if(isSorted())
+        {
+            int i = 0;
+            int j = length - 1;
+            while(i < j)
+            {
+                if(A[i] + A[j] > x)
+                {
+                    j--;
+                }
+                else if(A[i] + A[j] < x)
+                {
+                    i++;
+                }
+
+                else 
+                {
+                    printf("The sum of %d is %d and %d\n", x, A[i], A[j]);
+                    i++;
+                    j--;
+                }
+            }
+        }
+
+        else{
+            for(int i = 0; i < length - 1; i++)
+            {
+                if(A[i] < x)
+                {
+                    int y = x - A[i];
+                    for(int j = i + 1; j < length; j++)
+                    {
+                        if(A[j] == y)
+                        {
+                            printf("The sum of %d is %d and %d\n", x, A[i], y);
+                        }
+                    }
+                }  
+            }
+        }
+    }
+
+    void findSumOfH(int x)
+    {
+        int h = max();
+        int l = min();
+        int arr2[h + 1] = {0};
+
+            for(int i = 0; i < length; i++)
+            {
+                if(A[i] < x)
+                {
+                    int y = x - A[i];
+                    if (arr2[y] > 0)
+                    {
+                        printf("The sum of %d is %d and %d\n", x, A[i], y);
+                    }    
+                    arr2[A[i]]++;
+                }
+            }
+    }
+
+    void findMinAndMax()
+    {
+        int min = A[0];
+        int max = A[0];
+        for(int i = 1; i < length; i++)
+        {
+            if(min > A[i])
+            {
+                min = A[i];
+            }
+            else if(max < A[i])
+            {
+                max = A[i];
+            }
+        }
+        printf("Max = %d\nMin = %d\n", max, min);
+    }
 };
+
 int main(void)
 {
-    Array arr1 = {1, 2, 11, 4, 6, 7, 8, 9, 10};
+    Array arr1 = {1, 3, 4, 6, 7, 8, 9, 11, 14, 16, 18, 20};
     arr1.display();
-    arr1.findMissing();
+    arr1.findMinAndMax();
+
+
+
+    //Menu implmentation:
 
     // Array arr1(10);
     // arr1.append(10);
